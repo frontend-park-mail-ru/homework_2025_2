@@ -10,7 +10,6 @@
  *
  * @returns {Array<any>} Новый плоский массив
  */
-
 const flatten = arr => {
   const result = [];
   arr.map(item => {
