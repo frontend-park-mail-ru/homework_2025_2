@@ -2,13 +2,6 @@
  * Вычисляет факториал числа
  * @param {Number} n - число для вычисления факториала
  * 
- * @example
- * // throws Error
- * factorial(-1);
- * 
- * @example
- * // throws Error
- * factorial(abc);
  * 
  * @example
  * // returns 120
@@ -22,10 +15,8 @@ const factorial = n => {
         throw new Error('Факториал определен только для целых неотрицательных чисел');
     }
     
-    let result = 1;
-    for (let i = 2; i <= n; i++) {
-        result *= i;
+    if ((n == 0) || (n == 1)) {
+        return 1
     }
-
-    return result;
+    return n * factorial(n-1)
 };
