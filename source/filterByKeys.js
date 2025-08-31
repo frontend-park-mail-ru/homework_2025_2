@@ -14,6 +14,10 @@
  * @returns {object}
  */
 const filterObjectByKeys = (originalObject, keysToFilter) => {
+    if(typeof originalObject !== 'object' || originalObject === null || !Array.isArray(keysToFilter)){
+        return {};
+    }
+
     const result = {};
 
     for (const key of keysToFilter) {

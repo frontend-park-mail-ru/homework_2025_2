@@ -41,3 +41,34 @@ QUnit.module('Тестируем функцию filterObjectByKeys', () => {
         assert.deepEqual(result, { a: 1, b: null }, 'Ключ со значением null должен быть скопирован');
     });
 });
+
+QUnit.module('Тестируем filterObjectByKeys с некорректными входными данными', () => {
+
+    QUnit.test('Возвращает пустой объект, если вместо объекта передан null или undefined', (assert) => {
+        const keys = ['a', 'b'];
+        assert.deepEqual(filterObjectByKeys(null, keys), {}, 'Должен вернуть {} для null');
+        assert.deepEqual(filterObjectByKeys(undefined, keys), {}, 'Должен вернуть {} для undefined');
+    });
+
+    QUnit.test('Возвращает пустой объект, если вместо объекта переданы примитивы', (assert) => {
+        const keys = ['a', 'b'];
+        assert.deepEqual(filterObjectByKeys('some string', keys), {}, 'Должен вернуть {} для строки');
+        assert.deepEqual(filterObjectByKeys(12345, keys), {}, 'Должен вернуть {} для числа');
+        assert.deepEqual(filterObjectByKeys(true, keys), {}, 'Должен вернуть {} для boolean');
+        assert.deepEqual(filterObjectByKeys(Symbol('id'), keys), {}, 'Должен вернуть {} для Symbol');
+        assert.deepEqual(filterObjectByKeys(10n, keys), {}, 'Должен вернуть {} для BigInt');
+    });
+
+    QUnit.test('Возвращает пустой объект, если вместо объекта переданы специальные числовые значения', (assert) => {
+        const keys = ['toString'];
+        assert.deepEqual(filterObjectByKeys(NaN, keys), {}, 'Должен вернуть {} для NaN');
+        assert.deepEqual(filterObjectByKeys(Infinity, keys), {}, 'Должен вернуть {} для Infinity');
+    });
+
+    QUnit.test('Возвращает пустой объект, если вместо массива ключей передано что-то другое', (assert) => {
+        const obj = { a: 1 };
+        assert.deepEqual(filterObjectByKeys(obj, null), {}, 'Должен вернуть {} для null вместо массива');
+        assert.deepEqual(filterObjectByKeys(obj, { a: 1 }), {}, 'Должен вернуть {} для объекта вместо массива');
+        assert.deepEqual(filterObjectByKeys(obj, 'a'), {}, 'Должен вернуть {} для строки вместо массива');
+    });
+});
