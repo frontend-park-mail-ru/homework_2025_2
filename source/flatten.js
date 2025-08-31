@@ -11,13 +11,15 @@
  * @returns {Array<any>} Новый плоский массив
  */
 const flatten = arr => {
-  const result = [];
-  arr.map(item => {
+  if (!Array.isArray(arr)) {
+    throw new TypeError('Input must be an array');
+  }
+  return arr.reduce((acc, item) => {
     if (Array.isArray(item)) {
-      result.push(...flatten(item));
+      acc.push(...flatten(item));
     } else {
-      result.push(item);
+      acc.push(item);
     }
-  });
-  return result;
+    return acc;
+  }, []);
 };
