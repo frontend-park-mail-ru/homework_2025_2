@@ -28,4 +28,12 @@ QUnit.module('Тестируем функцию flatten', function () {
     const result = flatten([{3: 3}, 'f', [{5: '3', 3: ['r']}], 42]);
     assert.deepEqual(result, [{3: 3}, 'f', {5: '3', 3: ['r']}, 42]);
   });
+  QUnit.test('Работает правильно при большой вложенности', function (assert) {
+    let nested = [52];
+    for (let i = 0; i < 100; i++) {
+      nested = [nested];
+    }
+    const result = flatten(nested);
+    assert.deepEqual(result, [52]);
+  });
 });
