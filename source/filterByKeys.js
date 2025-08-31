@@ -18,13 +18,11 @@ const filterObjectByKeys = (originalObject, keysToFilter) => {
         return {};
     }
 
-    const result = {};
-
-    for (const key of keysToFilter) {
+    return keysToFilter.reduce((result, key) => {
         if (Object.hasOwn(originalObject, key)) {
             result[key] = originalObject[key];
         }
-    }
-    
-    return result;
+        return result;
+    }, {});
+
 };
