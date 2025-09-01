@@ -42,4 +42,55 @@ QUnit.module("Тестируем функцию partition", function() {
             ]
         ]);
     });
+    
+    QUnit.test("Правильно обрабатывает пустой массив. Возвращает два пустых массива", function(assert) {
+        const isPositive = num => num > 0;
+        const result = partition([], isPositive);
+    
+        assert.deepEqual(result, [[], []]);
+    });
+
+    QUnit.test("Правильно работает для массива из одного элемента", function(assert) {
+        const isPositive = x => x > 0;
+        const result = partition([5], isPositive);
+
+        assert.deepEqual(result, [[5], []]);
+    });
+
+    QUnit.test("Правильно работает для массива, предикат возвращает false для всех элементов", function(assert) {
+        const isNegative = x => x < 0;
+        const result = partition([1, 2, 3, 4, 5], isNegative);
+
+        assert.deepEqual(result, [[], [1, 2, 3, 4, 5]]);
+    });
+
+    QUnit.test("Правильно работает со строками. Проверяет четность длины строки", function(assert) {
+        const isEvenLength = str => str.length % 2 === 0;
+        const result = partition(["a", "aa", "aaa", "aaaa"], isEvenLength);
+
+        assert.deepEqual(result, [
+            ["aa", "aaaa"],
+            ["a", "aaa"]
+        ]);
+    });
+
+    QUnit.test("Правильно работает со строками. Обрабатывает пустые строки", function(assert) {
+        const isEvenLength = str => str.length % 2 === 0;
+        const result = partition(["", "", ""], isEvenLength);
+
+        assert.deepEqual(result, [
+            ["", "", ""],
+            []
+        ]);
+    });
+
+    QUnit.test("Правильно работает с null и undefined значениями", function(assert) {
+        const notNull = x => x != null;
+        const result = partition([null, 1, undefined, 2], notNull);
+
+        assert.deepEqual(result, [
+            [1, 2],
+            [null, undefined]
+        ]);
+    });
 });
