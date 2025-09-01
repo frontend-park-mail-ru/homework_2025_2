@@ -84,4 +84,22 @@ QUnit.module("Тестируем функцию deepClone", () => {
       "Вложенный объект в массиве объектов должен быть независимым"
     );
   });
+
+  QUnit.test(
+    "Работает правильно для вложенного объекта, который нельзя сериализовать в JSON ",
+    (assert) => {
+      const original = {
+        a: 1,
+        b: { fn: () => console.log(1), function: undefined },
+      };
+      const cloned = deepClone(original);
+
+      assert.deepEqual(cloned, original, "Копия должна быть равна оригиналу");
+      assert.notStrictEqual(
+        cloned,
+        original,
+        "Копия должна быть независимой от оригинала"
+      );
+    }
+  );
 });
