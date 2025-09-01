@@ -58,4 +58,51 @@ QUnit.module("Тестируем функцию templateEngine", function() {
         const result = templateEngine(template, data);
         assert.equal(result, "Число: 5");
     });
+
+    QUnit.test('Если входной шаблон не строка, должна выбрасываться ошибка', (assert) => {
+        assert.throws(() => {
+            const template = 5;
+            const data = { number: 5 };
+            const result = templateEngine(template, data);
+        }, /Аргумент template должен быть строкой/, 'Ошибка выбрасывается для template = 5');
+    });
+
+    QUnit.test('Если входные данные со значениями переменных не объект, должна выбрасываться ошибка', (assert) => {
+        assert.throws(() => {
+            const template = "Число: {{number}}";
+            const data = [5];
+            const result = templateEngine(template, data);
+        }, /Аргумент data должен быть объектом/, 'Ошибка выбрасывается для data = [5]');
+    });
+
+    QUnit.test("Работает правильно с undefined значениями в данных", function(assert) {
+        const template = "Город: {{address.city}}, Улица: {{address.street}}";
+        const data = { address: { city: undefined, street: "2-я Бауманская" } };
+        const result = templateEngine(template, data);
+
+        assert.equal(result, "Город: , Улица: 2-я Бауманская");
+    });
+
+    QUnit.test("Работает правильно с null значениями в данных", function(assert) {
+        const template = "Город: {{address.city}}, Улица: {{address.street}}";
+        const data = { address: { city: null, street: "2-я Бауманская" } };
+        const result = templateEngine(template, data);
+
+        assert.equal(result, "Город: , Улица: 2-я Бауманская");
+    });
+
+    QUnit.test("Работает правильно с пустыми значениями в данных", function(assert) {
+        const template = "Город: {{address.city}}, Улица: {{address.street}}";
+        const data = { address: { city: '', street: "2-я Бауманская" } };
+        const result = templateEngine(template, data);
+
+        assert.equal(result, "Город: , Улица: 2-я Бауманская");
+    });
+
+    QUnit.test("Работает правильно с булевыми переменными", function(assert) {
+        const template = "Флаг: {{flag}}";
+        const data = { flag: true };
+        const result = templateEngine(template, data);
+        assert.equal(result, "Флаг: true");
+    });
 });

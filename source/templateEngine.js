@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Заменяет в шаблоне переменные в фигурных скобках на значения из объекта данных
  * @param {string} template - Строка-шаблон с переменными в формате {{variable}}
@@ -15,7 +17,30 @@
  * 
  * @returns {string}
  */
-function templateEngine(template, data) {
+let templateEngine = (template, data) => {
+    if (typeof template !== 'string') {
+        throw new TypeError('Аргумент template должен быть строкой');
+    }
+
+    if (typeof data !== 'object' || data === null || Array.isArray(data)) {
+        throw new TypeError('Аргумент data должен быть объектом')
+    }
+
+    let getValue = (variableName, data) => {
+        if (!variableName || typeof variableName !== 'string') {
+            return '';
+        }
+        let value = '';
+        value = variableName.split('.').reduce((cur, part) => {
+            return cur && cur[part] !== undefined ? cur[part] : '';
+                }, data)
+
+        if (value === null) {
+            return '';
+        }
+        return value;
+    }
+
     let i = 0;
     let result = '';
 
@@ -30,7 +55,6 @@ function templateEngine(template, data) {
             result += template[i];
             i++;
         }
-        
         else {
             i += 2;
             let name = '';
@@ -44,34 +68,11 @@ function templateEngine(template, data) {
                 break; 
             }
 
-            name = name.trim()
+            name = name.trim();
             i += 2;
 
-            let value = '';
-            if (name.indexOf('.') === -1) {
-                if (data[name] != undefined) {
-                    value = data[name];
-                }
-            }
-
-            else {
-                let parts = name.split('.');
-                let cur = data;
-                for (const part of parts) {
-                    if (cur && cur[part] != undefined) {
-                        cur = cur[part];
-                    }
-                    else {
-                        cur = '';
-                        break;
-                    }
-                }
-                value = cur;
-            }
-
-            result += value;
+            result += getValue(name, data);
         }
     }
-
     return result;
 }
