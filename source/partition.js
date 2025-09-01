@@ -8,7 +8,7 @@
  * @param {(value: T) => boolean} predicate
  *        Функция-предикат, принимающая элемент массива,
  *        должна возвращать логическое значение (`true`/`false`).
- * @returns {Array<Array<T>>} Двухэлементный массив: `[matching, nonMatching]`.
+ * @returns {Array<Array<T>>} Двумерный массив: `[matching, nonMatching]`.
  *
  * @example
  * // Разделить числа на чётные и нечётные
@@ -22,7 +22,6 @@ function partition(arr, predicate) {
         if (predicate(elem)) {
             matching.push(elem);
         } else {
-        else {
             nonMatching.push(elem);
         }
     }
