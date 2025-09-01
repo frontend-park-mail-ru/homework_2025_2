@@ -14,7 +14,7 @@ function templateEngine(templateString, dataObject) {
     return templateString.replace(/\{\{([^}]+)\}\}/g, (_, variableText) => {
         return getVariableValue(variableText, dataObject);
     });
-};
+}
 
 /**
  * Получает значение переменной из объекта по строке с именем
@@ -36,4 +36,4 @@ function getVariableValue (variableText, dataObject) {
         variableValue = variableValue[parts[i]] ? variableValue[parts[i]] : '';
     }
     return variableValue;
-};
+}
