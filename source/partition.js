@@ -21,7 +21,7 @@ function partition(arr, predicate) {
     for (let elem of arr) {
         if (predicate(elem)) {
             matching.push(elem);
-        }
+        } else {
         else {
             nonMatching.push(elem);
         }
