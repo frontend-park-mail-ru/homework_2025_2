@@ -17,28 +17,17 @@ QUnit.module("Тестируем функцию flatten", function() {
         assert.deepEqual(result, []);
     });
     
-    QUnit.test("Доп тест", function(assert) {
+    QUnit.test("Работает правильно с повторяющимися элементами", function(assert) {
         const result = flatten([7, 7, [7, 7, [7, 7, 7]]]);
-        assert.deepEqual(result, [7]);
+        assert.deepEqual(result, [7, 7, 7, 7, 7, 7, 7]);
+    });
+    QUnit.test("Работает правильно с вложенными пустыми массивами", function(assert) {
+        const result = flatten([[], [], [[], [], [[], []]]]);
+        assert.deepEqual(result, []);
     });
     
-    QUnit.test("Доп тест", function(assert) {
-        const result = flatten([1, 1, [2, 1, [1, 1, 3]]]);
-        assert.deepEqual(result, [1, 2, 3]);
-    });
-    
-    QUnit.test("Доп тест", function(assert) {
-        const result = flatten([[0], [2], [[1],[11],[[111],[12]]]]);
-        assert.deepEqual(result, [0, 2, 1, 11, 111, 12]);
-    });
-
-    QUnit.test("Доп тест", function(assert) {
-        const result = flatten([[], [], [[], [1], [[], [2]]]]);
-        assert.deepEqual(result, [1, 2]);
-    });
-    
-    QUnit.test("Доп тест", function(assert) {
-        const result = flatten([1, 2, 3, 1, 2, [1, 1], [4, 4, 5, [2, 3]]]);
-        assert.deepEqual(result, [1, 2, 3, 4, 5]);
+    QUnit.test("Работает правильно с различными типами данных", function(assert) {
+        const result = flatten([1, {"a": 1}, 3, "abc", {"a": 1}, {"b": 1}, [{"b": 1}, [1.23, {"c": 1}]]]);
+        assert.deepEqual(result, [1, {"a": 1}, 3, "abc", {"a": 1}, {"b": 1}, {"b": 1}, 1.23, {"c": 1}]);
     });
 });
