@@ -41,11 +41,22 @@ QUnit.module("Тестируем функцию deepClone", () => {
     );
   });
 
-  QUnit.test("Работает правильно для массива объектов", (assert) => {
+  QUnit.test("Работает правильно для массива не примитивов", (assert) => {
+    let map = new Map();
+    map.set("1", "test");
+    map.set(1234, [1, 2, 3, 4, 5]);
+    map.set("abc", { 1: undefined, 2: Infinity });
+
+    let set = new Set();
+    set.add("1234");
+    set.add({ 1: 2 });
+    set.add([123, { a: undefined }]);
+
     const original = [
-      { a: 1, b: 2 },
-      { a: 2, b: 3, c: 4 },
+      { a: Infinity, b: 1234 },
+      { a: new Date(), b: set, c: map },
     ];
+
     const cloned = deepClone(original);
 
     assert.deepEqual(
@@ -60,28 +71,26 @@ QUnit.module("Тестируем функцию deepClone", () => {
     );
   });
 
-  QUnit.test("Работает правильно для массива вложенных объектов", (assert) => {
-    const original = [
-      { a: 1, b: { c: 4 } },
-      { a: { b: 5 }, c: 6 },
-    ];
+  QUnit.test("Работает правильно для не объекта", (assert) => {
+    const original = "TEST";
     const cloned = deepClone(original);
 
     assert.deepEqual(
-      cloned,
-      original,
-      "Копия массива должна быть равна оригиналу"
-    );
-    assert.notStrictEqual(
-      cloned[1],
-      original[1],
-      "Вложенный объект в массиве должен быть независимым"
+      deepClone("TEST"),
+      "TEST",
+      "Копия примитива должна быть равна оригиналу"
     );
 
-    assert.notStrictEqual(
-      cloned[0].b,
-      original[0].b,
-      "Вложенный объект в массиве объектов должен быть независимым"
+    assert.deepEqual(
+      deepClone(1),
+      1,
+      "Копия примитива должна быть равна оригиналу"
+    );
+
+    assert.deepEqual(
+      deepClone(Infinity),
+      Infinity,
+      "Копия примитива должна быть равна оригиналу"
     );
   });
 

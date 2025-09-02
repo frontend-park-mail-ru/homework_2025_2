@@ -2,27 +2,39 @@
 
 /**
  * Функция, глубокого копирования объекта
- * @param {Object} obj - объект с неограниченной вложенностью
+ * @param {*} obj - объект с неограниченной вложенностью
  *
  * @example
  * // returns { a: 1, b: 2 }
  * deepClone({ a: 1, b: 2 });
  *
- * @returns {Object}
+ * @returns {*}
  */
 const deepClone = (obj) => {
-  if (Object.prototype.toString.call(obj) === "[object Object]") {
-    let result = {};
-    Object.entries(obj).forEach(([k, v]) => {
-      result[k] = deepClone(v);
-    });
-    return result;
-  }
+  if (typeof obj !== "object" || obj == null || obj == undefined) return obj;
 
   if (Array.isArray(obj)) {
-    let result = [];
-    obj.forEach((val) => result.push(deepClone(val)));
-    return result;
+    return obj.map((val) => deepClone(val));
   }
-  return obj;
+
+  if (obj instanceof Date) {
+    return new Date(obj.getTime());
+  }
+
+  if (obj instanceof Map) {
+    return new Map(obj);
+  }
+
+  if (obj instanceof Set) {
+    return new Set(obj);
+  }
+
+  let result = {};
+
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key))
+      result[key] = deepClone(obj[key]);
+  }
+
+  return result;
 };
