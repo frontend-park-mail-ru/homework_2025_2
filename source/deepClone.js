@@ -1,21 +1,19 @@
-'use strict';
-
 /**
  * Функция, создающая глубокую копию значения
- * @param {*} obj - исходное значение (объект, массив, и тд)
- *
+ * @param {*} obj - исходное значение
+ * 
  * @example
  * // returns { a: 1, b: { c: 2 } }
  * deepClone({ a: 1, b: { c: 2 } });
- *
+ * 
  * @example
  * // returns [1, [2, 3]]
  * deepClone([1, [2, 3]]);
- *
+ * 
  * @example
  * // returns "hello"
  * deepClone("hello");
- *
+ * 
  * @returns {*} - глубокая копия исходного значения
  */
 const deepClone = function(obj) {
@@ -33,6 +31,22 @@ const deepClone = function(obj) {
 
     if (obj instanceof Date) {
         return new Date(obj.getTime());
+    }
+
+    if (obj instanceof RegExp) {
+        return new RegExp(obj.source, obj.flags);
+    }
+
+    if (obj instanceof Set) {
+        const clonedSet = new Set();
+        obj.forEach(value => clonedSet.add(deepClone(value)));
+        return clonedSet;
+    }
+
+    if (obj instanceof Map) {
+        const clonedMap = new Map();
+        obj.forEach((value, key) => clonedMap.set(deepClone(key), deepClone(value)));
+        return clonedMap;
     }
 
     const clonedObj = {};
