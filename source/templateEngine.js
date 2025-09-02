@@ -36,7 +36,7 @@ function templateEngine(templateString, dataObject) {
  * 
  * @returns {*} Значение переменной или пустая строка, если переменной не найдено
  */
-let getVariableValue = (variableText, dataObject) => {
+const getVariableValue = (variableText, dataObject) => {
     const parts = variableText.split('.');
     let variableValue = dataObject;
     for (let i = 0; i < parts.length; i++) {
