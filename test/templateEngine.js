@@ -81,5 +81,12 @@ QUnit.module("Тестируем функцию templateEngine", function() {
         assert.equal(result, "{Текст} о Технопарке");
     });
 
+    QUnit.test("Работает правильно с вложенным undefined", function(assert) {
+        const template = "Значение: {{a.b.c}}";
+        const data = { a: { b: undefined } };
+        const result = templateEngine(template, data);
+        
+        assert.equal(result, "Значение: ");
+    });
 });
 

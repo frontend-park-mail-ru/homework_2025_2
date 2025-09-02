@@ -11,6 +11,13 @@
  * @returns {string} Результирующая строка с подставленными значениями
  */
 function templateEngine(templateString, dataObject) {
+    if (typeof templateString != 'string') {
+        throw new TypeError('templateString должен быть строкой');
+    }
+    if (typeof dataObject != 'object') {
+        throw new TypeError('dataObject должен быть объектом');
+    }
+    console.log(typeof(dataObject));
     return templateString.replace(/\{\{([^}]+)\}\}/g, (_, variableText) => {
         return getVariableValue(variableText, dataObject);
     });
@@ -29,11 +36,11 @@ function templateEngine(templateString, dataObject) {
  * 
  * @returns {*} Значение переменной или пустая строка, если переменной не найдено
  */
-function getVariableValue (variableText, dataObject) {
+let getVariableValue = (variableText, dataObject) => {
     const parts = variableText.split('.');
     let variableValue = dataObject;
     for (let i = 0; i < parts.length; i++) {
         variableValue = variableValue[parts[i]] ? variableValue[parts[i]] : '';
     }
     return variableValue;
-}
+};
