@@ -1,6 +1,36 @@
 'use strict';
 
 /**
+ * Извлекает значение из объекта по строковому пути
+ * @param {string} variableName - Путь к свойству в формате 'ключ.вложенныйКлюч'
+ * @param {Object} data - Объект, из которого извлекается значение
+ * 
+ * @example
+ * // returns 'Москва'
+ * getValue('address.city', { address: { city: 'Москва' } });
+ * 
+ * @example
+ * // returns ''
+ * getValue('', { name: 'Технопарк' });
+ * 
+ * @returns {*} Значение свойства или пустая строка, если свойство не найдено
+ */
+let getValue = (variableName, data) => {
+    if (!variableName || typeof variableName !== 'string') {
+        return '';
+    }
+    let value = '';
+    value = variableName.split('.').reduce((cur, part) => {
+        return cur && cur[part] !== undefined ? cur[part] : '';
+            }, data)
+
+    if (value === null) {
+        return '';
+    }
+    return value;
+}
+
+/**
  * Заменяет в шаблоне переменные в фигурных скобках на значения из объекта данных
  * @param {string} template - Строка-шаблон с переменными в формате {{variable}}
  * @param {Object} data - Объект с данными для подстановки
@@ -24,21 +54,6 @@ let templateEngine = (template, data) => {
 
     if (typeof data !== 'object' || data === null || Array.isArray(data)) {
         throw new TypeError('Аргумент data должен быть объектом')
-    }
-
-    let getValue = (variableName, data) => {
-        if (!variableName || typeof variableName !== 'string') {
-            return '';
-        }
-        let value = '';
-        value = variableName.split('.').reduce((cur, part) => {
-            return cur && cur[part] !== undefined ? cur[part] : '';
-                }, data)
-
-        if (value === null) {
-            return '';
-        }
-        return value;
     }
 
     let i = 0;
