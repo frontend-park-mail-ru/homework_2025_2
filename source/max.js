@@ -23,8 +23,8 @@ const max = numbers => Math.max(...numbers);
  * @param {Object} target - объект с новыми значениями
  * 
  * @example
- * // returns { a: 1, b: { c: 2, d: 3 } }
- * deepMerge({ a: 1, b: { c: 2 } }, { b: { d: 3 } });
+ * // returns { a: 1, b: { c: 2, d: 3 }, e: 5 }
+ * deepMerge({ a: 1, b: { c: 2 }, e: 4 }, { b: { d: 3 }, e: 5 });
  * 
  * @returns {Object}
  */
