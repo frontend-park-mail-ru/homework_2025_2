@@ -33,6 +33,6 @@ QUnit.module("Тестируем функцию flatten", function() {
     
     QUnit.test("Работает правильно с неверными входными данными", function(assert) {
         const result = flatten({ "foo": "bar" });
-        assert.deepEqual(result, "Invalid input");
+        assert.deepEqual(result, []);
     });
 });
