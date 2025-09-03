@@ -27,9 +27,8 @@ function deepMerge(source, target) {
             const targetValue = target[key];
 
             if (
-                typeof sourceValue === "object" && sourceValue !== null &&
-                typeof targetValue === "object" && targetValue !== null &&
-                !Array.isArray(sourceValue) && !Array.isArray(targetValue)
+                sourceValue instanceof Object && !Array.isArray(sourceValue) &&
+                targetValue instanceof Object && !Array.isArray(targetValue)
             ) {
                 result[key] = deepMerge(sourceValue, targetValue);
             } else {
