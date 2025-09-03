@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Рекурсивно объединяет два объекта.
  * Если ключи совпадают и значения являются объектами — выполняется глубокое объединение.
@@ -14,9 +16,6 @@
  * );
  * // => { user: { name: "Alice", age: 30 } }
  */
-
-"use strict";
-
 function deepMerge(source, target) {
     if (target === null || typeof target !== "object") return { ...source};
 
