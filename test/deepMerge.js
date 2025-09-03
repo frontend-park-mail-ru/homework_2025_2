@@ -80,4 +80,45 @@ QUnit.module("Тестируем функцию deepMerge", function() {
         const result = deepMerge(source, target);
         assert.deepEqual(result, expected, "Должно возвращать исходный объект при отсутствии второго");
     });
+
+    QUnit.test("Работает с двумя пустым исходным объектом", function(assert) {
+        const source = {};
+        const target = {};
+
+        const expected = {};
+
+        const result = deepMerge(source, target);
+        assert.deepEqual(result, expected, "Должно возвращать пустой объект");
+    });
+
+    QUnit.test("Заменяет примитив на объект", function(assert) {
+        const source = { a: 1 };
+        const target = { a: { b: 2 } };
+
+        const expected = { a: { b: 2 } };
+
+        const result = deepMerge(source, target);
+        assert.deepEqual(result, expected, "Примитив должен быть заменён объектом");
+    });
+
+    QUnit.test("Заменяет объект на примитив", function(assert) {
+        const source = { a: { b: 2} };
+        const target = { a: 1 };
+
+        const expected = { a: 1 };
+
+        const result = deepMerge(source, target);
+        assert.deepEqual(result, expected, "Объект должен быть заменён примитивом");
+    });
+
+    QUnit.test("Работает правильно с глубоко вложенными объектами", function(assert) {
+        const source = { a: { b: { c: 1 } } };
+        const target = { a: { b: { d: 2 } } };
+
+        const expected = { a: { b: { c: 1, d: 2 } } };
+
+        const result = deepMerge(source, target);
+        assert.deepEqual(result, expected, "Вложенные объекты должны объединяться");
+    });
+
 });
