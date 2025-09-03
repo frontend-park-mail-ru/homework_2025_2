@@ -18,9 +18,8 @@ const factorial = (n) => {
     if (!Number.isInteger(n) || n < 0) {
         throw new Error("Факториал определен только для целых неотрицательных чисел");
     }
-    let answer = 1;
-    for (let i = 2; i <= n; i++) {
-        answer *= i;
+    if (n === 0) {
+        return 1;
     }
-    return answer;
+    return factorial(n - 1) * n;
 }
