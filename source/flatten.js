@@ -12,6 +12,9 @@
  * @returns {Array}
  */
 const flatten = function(input) {
+    if (!Array.isArray(input)) {
+        return "Invalid input";
+    }
     let result = [];
     for (let i = 0; i < input.length; i++) {
         if (Array.isArray(input[i])) {
