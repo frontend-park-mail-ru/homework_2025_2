@@ -30,4 +30,9 @@ QUnit.module("Тестируем функцию flatten", function() {
         const result = flatten([1, {"a": 1}, 3, "abc", {"a": 1}, {"b": 1}, [{"b": 1}, [1.23, {"c": 1}]]]);
         assert.deepEqual(result, [1, {"a": 1}, 3, "abc", {"a": 1}, {"b": 1}, {"b": 1}, 1.23, {"c": 1}]);
     });
+    
+    QUnit.test("Работает правильно с неверными входными данными", function(assert) {
+        const result = flatten({ "foo": "bar" });
+        assert.deepEqual(result, "Invalid input");
+    });
 });
