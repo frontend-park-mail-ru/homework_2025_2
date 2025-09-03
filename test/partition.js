@@ -72,4 +72,24 @@ QUnit.module("Тестируем функцию partition", function() {
             ["vk", "dz"]
         ]);
     });
+
+    QUnit.test("Работает хорошо на массиве из одного элемента", function(assert) {
+        const isEven = num => num % 2 === 0;
+        const result = partition([1],isEven);
+
+        assert.deepEqual(result, [
+            [],
+            [1]
+        ]);
+    });
+
+    QUnit.test("Проверка на 'чистую' функцию", function(assert) {
+        const isEven = num => num % 2 === 0;
+        const originArr = [1, 2, 3, 4, 5, 6];
+        const copyArr = [...originArr];
+        const result = partition(originArr, isEven);
+
+        assert.deepEqual(originArr, copyArr);
+
+    });
 });

@@ -11,8 +11,7 @@
  * 
  * @returns {Array<Array>} 
  */
-
 const partition = (arr, predicate) => arr.reduce(
-    ([pass,fail],elem) => predicate(elem) ? [[...pass, elem],fail] : [pass, [...fail, elem]], 
+    ([pass, fail], elem) => predicate(elem) ? [[...pass, elem], fail] : [pass, [...fail, elem]], 
     [[],[]]
 );
