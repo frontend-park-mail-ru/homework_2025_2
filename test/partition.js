@@ -42,4 +42,34 @@ QUnit.module("Тестируем функцию partition", function() {
             ]
         ]);
     });
+
+    QUnit.test("Работает правильно при разделении с предикатом, возвращающим false для всех элементов", function(assert) {
+        const isPositive = num => num > 0;
+        const result = partition([-1, -2, -3, -4, -5], isPositive);
+
+        assert.deepEqual(result, [
+            [],
+            [-1, -2, -3, -4, -5]
+        ]);
+    });
+
+    QUnit.test("Работает правильно с пустым массивом", function(assert) {
+        const isEven = num => num % 2 === 0;
+        const result = partition([], isEven);
+
+        assert.deepEqual(result, [
+            [],
+            []
+        ]);
+    });
+
+    QUnit.test("Работает правильно со строками", function(assert) {
+        const isLongString = str => str.length > 6;
+        const result = partition(["technopark", "vk", "frontend", "education", "dz"], isLongString);
+
+        assert.deepEqual(result, [
+            ["technopark", "frontend", "education"],
+            ["vk", "dz"]
+        ]);
+    });
 });
