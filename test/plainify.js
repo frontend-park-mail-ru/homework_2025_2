@@ -34,4 +34,18 @@ QUnit.module('Тестируем функцию plainify', () => {
 
         assert.deepEqual(result, { x: 'hello', y: 42, 'z.a': 1, 'z.b': 2 }, 'Примитивы и вложенные объекты должны быть правильно преобразованы');
     });
+
+    QUnit.test('Работает правильно с null', (assert) => {
+        const originalObject = { a: null, b: 5 };
+        const result = plainify(originalObject);
+
+        assert.deepEqual(result, { a: null, b: 5 }, 'Значение null должно остаться как есть');
+    });
+
+    QUnit.test('Работает правильно с массивом', (assert) => {
+        const originalObject = { list: [1, 2, 3], x: 10 };
+        const result = plainify(originalObject);
+
+        assert.deepEqual(result, { list: [1, 2, 3], x: 10 }, 'Массив должен остаться как значение целиком');
+    });
 });
