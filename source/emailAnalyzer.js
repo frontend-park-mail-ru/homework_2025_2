@@ -13,7 +13,7 @@
  *   emailCount: number,
  *   uniqueEmails: Array<string>,
  *   mostFrequentEmail: string
- * }}
+ * }|undefined}
  */
 
 function emailAnalyzer(rawString)
