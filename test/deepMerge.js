@@ -121,4 +121,20 @@ QUnit.module("Тестируем функцию deepMerge", function() {
         assert.deepEqual(result, expected, "Вложенные объекты должны объединяться");
     });
 
+    QUnit.test("Работает правильно с null, undefined, number и string", function(assert) {
+        const source = { a: 1, b: 2};
+        let result = deepMerge(source,null);
+        assert.deepEqual(result, source, "При target=null возвращает копию source");
+
+        result = deepMerge(source,undefined)
+        assert.deepEqual(result, source, "При target=undefined возвращает копию source");
+
+        result = deepMerge(source,2025)
+        assert.deepEqual(result, source, "При target=number возвращает копию source");
+
+        result = deepMerge(source,"Some string")
+        assert.deepEqual(result, source, "При target=string возвращает копию source");
+
+    });
+
 });
