@@ -12,10 +12,10 @@
  * @returns {Array}
  */
 const flatten = function(input) {
-    if (!Array.isArray(input)) {
-        return "Invalid input";
-    }
     let result = [];
+    if (!Array.isArray(input)) {
+        return result;
+    }
     for (let i = 0; i < input.length; i++) {
         if (Array.isArray(input[i])) {
             result = result.concat(flatten(input[i]));
