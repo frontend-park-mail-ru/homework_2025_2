@@ -128,5 +128,70 @@ QUnit.module("Тестируем функцию deepMerge", function() {
         assert.deepEqual(result, expected, "a и b полностью перезапишутся");
     })
 
+        QUnit.test("Работает с пустым объектом", function(assert){
+        const source = {
+            a: 1,
+            b: [2, 3]
+        };
+
+        const target = {};
+
+        const expected = {
+            a: 1,
+            b: [2, 3]
+        };
+
+        const result = deepMerge(source, target);
+        assert.deepEqual(result, expected, "Должен возвращать исходный объект при отсутствии второго");
+    })
+
+    QUnit.test("Работает с перезаписью вложенных объектов", function(assert){
+        const source = { 
+            a: { 
+                b: 1, 
+                c: 2 
+            } 
+        };
+
+        const target = { 
+            a: { 
+                b: 3 
+            } 
+        };
+
+        const expected = { 
+            a: { 
+                b: 3, 
+                c: 2 
+            } 
+        };
+
+        const result = deepMerge(source, target);
+        assert.deepEqual(result, expected, "Должен правильно перезаписывать вложенные объекты");
+    })
+
+
+    QUnit.test("Работает корректно при разных типах значений", function(assert){
+        const source = {
+            user: 'oldUserName',
+            };
+
+            const target = {
+            user: {
+                name: 'Alice'
+            },
+        };
+
+        const expected = {
+            user: {
+                name: 'Alice'
+            }
+        }
+
+        const result = deepMerge(source, target);
+        assert.deepEqual(result, expected, "Должен правильно обрабатывать случай когда одинаковый ключ содержит различный тип данных");
+    })
+
+
 
 });
