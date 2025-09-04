@@ -5,7 +5,7 @@
  *
  *
  * @example
- * const result = analyzeEmails("test@mail.com, user@mail.com");
+ * const result = emailAnalyzer("test@mail.com, user@mail.com");
  * // result.emailCount === 2
  * // result.uniqueEmails = ['test@mail.com', 'user@mail.com']
  * // result.mostFrequentEmail = 'test@mail.com'
