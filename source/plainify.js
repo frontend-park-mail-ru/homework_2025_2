@@ -11,7 +11,7 @@
  *
  * @returns {object}
  */
-function plainify(obj, prefix = '') {
+const plainify = (obj, prefix = '') => {
     const out = {};
     for (const [key, val] of Object.entries(obj || {})) {
         const path = prefix ? `${prefix}.${key}` : key;
@@ -22,4 +22,4 @@ function plainify(obj, prefix = '') {
         }
     }
     return out;
-}
+};
