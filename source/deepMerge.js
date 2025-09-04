@@ -1,9 +1,15 @@
 'use strict';
 
-
-
-
-
+/**
+ * Проверка значения на не null, тип object и не массив
+ * @param {any} val - объект для проверки
+ * 
+ * @example
+ * // returns true
+ * isObject({ a: 1 })
+ * 
+ * @returns {boolean}
+ */
 const isObject = (val) => val !== null && typeof(val) === 'object' && !Array.isArray(val)
 
 /**
@@ -12,7 +18,6 @@ const isObject = (val) => val !== null && typeof(val) === 'object' && !Array.isA
  * Если значения не являются объектами, то значение из второго объекта должно перезаписывать значение из первого.
  * @param {Object} source - исходный объект
  * @param {Object} target - объект с новыми значениями
- * @param {Object} [result={}] - результирующий объект
  * 
  * @example
  * // returns { a: 1, b: { c: 2, d: 3 }, e: 5 }
@@ -21,7 +26,7 @@ const isObject = (val) => val !== null && typeof(val) === 'object' && !Array.isA
  * @returns {Object}
  */
 const deepMerge = (source, target) => {
-    const result = {...source}
+    const result = {...source};
 
     Object.entries(target).forEach(([k, v]) => {
         if (isObject(result[k]) && isObject(v)) {
@@ -31,6 +36,6 @@ const deepMerge = (source, target) => {
             result[k] = v;
         }
     })
-    
+
     return result;
 }
