@@ -35,7 +35,7 @@ QUnit.module("Тестируем функцию deepMerge", function() {
                     country: "Fantasyland"
                 }
             },
-            hobbies: ["traveling"],
+            hobbies: ["traveling", "gaming"],
             isActive: true
         };
 
@@ -135,6 +135,50 @@ QUnit.module("Тестируем функцию deepMerge", function() {
         result = deepMerge(source,"Some string")
         assert.deepEqual(result, source, "При target=string возвращает копию source");
 
+    });
+
+    QUnit.test("Работает правильно когда source не определен", function(assert) {
+        let source = null;
+        let result = deepMerge(source,null);
+        const expected = {};
+        assert.deepEqual(result, expected, "При source=null возвращает пустой объект");
+
+        source = undefined;
+        result = deepMerge(source,null);
+        assert.deepEqual(result, expected, "При source=undefined возвращает пустой объект");
+
+    });
+    
+    QUnit.test("Работает, если source массив", function(assert) {
+        const source = [1, 2, 3];
+        const target = "Some string";
+        const expected = [1, 2, 3];
+
+        const result = deepMerge(source, target);
+        assert.deepEqual(result, expected, "Должно корректно объединять массивы по индексам");
+    });
+
+    QUnit.test("Работает, если оба входных значения массивы", function(assert) {
+        const source = [1, { x: 2 }];
+        const target = [{ y: 3 }, 4];
+        const expected = [{ y: 3 }, 4];
+
+        const result = deepMerge(source, target);
+        assert.deepEqual(result, expected, "Должно корректно объединять массивы с объектами внутри");
+    });
+
+    QUnit.test("Работает, если target массив", function(assert) {
+        const source = { a: 1, b: 2 };
+        const target = [3, 4];
+        const expected = {
+            "a": 1,
+            "b": 2,
+            "0": 3,
+            "1": 4
+        };
+
+        const result = deepMerge(source, target);
+        assert.deepEqual(result, expected, "Должно Объединяет объект и массив");
     });
 
 });
