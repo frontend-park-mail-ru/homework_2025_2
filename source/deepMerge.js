@@ -17,25 +17,26 @@
  * // => { user: { name: "Alice", age: 30 } }
  */
 function deepMerge(source, target) {
-    if (target === null || typeof target !== "object") return { ...source};
+    if (target === null || typeof target !== "object"){
+        if (source === undefined || source === null) return {};
 
-    const result = { ...source };
+        return structuredClone(source) ?? {};
+    }
 
-    for (const key in target) {
-        if (Object.hasOwn(target,key)) {
+    const result = structuredClone(source);
+
+    Object.keys(target).forEach(key => {
             const sourceValue = result[key];
             const targetValue = target[key];
 
             if (
-                sourceValue instanceof Object && !Array.isArray(sourceValue) &&
-                targetValue instanceof Object && !Array.isArray(targetValue)
+                sourceValue instanceof Object && targetValue instanceof Object 
             ) {
                 result[key] = deepMerge(sourceValue, targetValue);
             } else {
                 result[key] = targetValue;
             }
-        }
-    }
+    });
 
     return result;
 }
