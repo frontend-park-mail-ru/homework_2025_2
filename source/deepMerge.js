@@ -1,5 +1,11 @@
 'use strict';
 
+
+
+
+
+const isObject = (val) => val !== null && typeof(val) === 'object' && !Array.isArray(val)
+
 /**
  * Глубокое объединение двух объектов
  * Если оба объекта содержат одинаковые ключи, и значения по этим ключам являются объектами, то они должны быть объединены рекурсивно. 
@@ -14,20 +20,17 @@
  * 
  * @returns {Object}
  */
-const deepMerge = (source, target, result = {}) => {
-
-    Object.entries(source).forEach(([k, v]) => {
-        result[k] = (typeof(v) === 'object' && v !== null && !Array.isArray(v)) ? deepMerge(v, {}, {}) : v;
-    })
+const deepMerge = (source, target) => {
+    const result = {...source}
 
     Object.entries(target).forEach(([k, v]) => {
-        if (!(k in source) || typeof(v) !== typeof(source[k]) || typeof(v) !== 'object' || v === null || Array.isArray(v)) {
-            result[k] = v;
+        if (isObject(result[k]) && isObject(v)) {
+            result[k] = deepMerge(result[k], v);
         }
         else {
-            result[k] = deepMerge(source[k], v, result[k]);
+            result[k] = v;
         }
     })
-
+    
     return result;
 }
