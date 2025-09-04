@@ -6,11 +6,11 @@
  * 
  * @example
  * // returns true
- * isObject({ a: 1 })
+ * isObject({ a: 1 });
  * 
  * @returns {boolean}
  */
-const isObject = (val) => val !== null && typeof(val) === 'object' && !Array.isArray(val)
+const isObject = (val) => val !== null && typeof(val) === 'object' && !Array.isArray(val);
 
 /**
  * Глубокое объединение двух объектов
@@ -35,7 +35,7 @@ const deepMerge = (source, target) => {
         else {
             result[k] = v;
         }
-    })
+    });
 
     return result;
 }

@@ -81,7 +81,7 @@ QUnit.module("Тестируем функцию deepMerge", function() {
         assert.deepEqual(result, expected, "Должно возвращать исходный объект при отсутствии второго");
     });
 
-    QUnit.test("Добавление нового вложенного объекта", function(assert){
+    QUnit.test("Добавление нового вложенного объекта", function(assert) {
         const source  = {
             user: {
                 name: "Alice"
@@ -106,9 +106,9 @@ QUnit.module("Тестируем функцию deepMerge", function() {
         };
         const result = deepMerge(source, target);
         assert.deepEqual(result, expected, "Новый вложенный объект должен добавляться");
-    })
+    });
     
-    QUnit.test("Работает с null и массивами", function(assert){
+    QUnit.test("Работает с null и массивами", function(assert) {
         const source = {
             a: 1,
             b: [2, 3]
@@ -126,9 +126,9 @@ QUnit.module("Тестируем функцию deepMerge", function() {
 
         const result = deepMerge(source, target);
         assert.deepEqual(result, expected, "a и b полностью перезапишутся");
-    })
+    });
 
-        QUnit.test("Работает с пустым объектом", function(assert){
+    QUnit.test("Работает с пустым объектом", function(assert) {
         const source = {
             a: 1,
             b: [2, 3]
@@ -143,9 +143,9 @@ QUnit.module("Тестируем функцию deepMerge", function() {
 
         const result = deepMerge(source, target);
         assert.deepEqual(result, expected, "Должен возвращать исходный объект при отсутствии второго");
-    })
+    });
 
-    QUnit.test("Работает с перезаписью вложенных объектов", function(assert){
+    QUnit.test("Работает с перезаписью вложенных объектов", function(assert) {
         const source = { 
             a: { 
                 b: 1, 
@@ -168,10 +168,10 @@ QUnit.module("Тестируем функцию deepMerge", function() {
 
         const result = deepMerge(source, target);
         assert.deepEqual(result, expected, "Должен правильно перезаписывать вложенные объекты");
-    })
+    });
 
 
-    QUnit.test("Работает корректно при разных типах значений", function(assert){
+    QUnit.test("Работает корректно при разных типах значений", function(assert) {
         const source = {
             user: 'oldUserName',
             };
@@ -186,12 +186,9 @@ QUnit.module("Тестируем функцию deepMerge", function() {
             user: {
                 name: 'Alice'
             }
-        }
+        };
 
         const result = deepMerge(source, target);
         assert.deepEqual(result, expected, "Должен правильно обрабатывать случай когда одинаковый ключ содержит различный тип данных");
-    })
-
-
-
+    });
 });
