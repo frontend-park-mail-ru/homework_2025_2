@@ -88,5 +88,13 @@ QUnit.module("Тестируем функцию templateEngine", function() {
         
         assert.equal(result, "Значение: ");
     });
+
+    QUnit.test("Работает правильно с объектами String", function(assert) {
+        const template = new String('aaa');
+        const data = { a: { b: undefined } };
+        const result = templateEngine(template, data);
+        
+        assert.equal(result, "aaa");
+    });
 });
 

@@ -11,10 +11,10 @@
  * @returns {string} Результирующая строка с подставленными значениями
  */
 function templateEngine(templateString, dataObject) {
-    if (typeof templateString != 'string') {
+    if (typeof templateString !== 'string' && !(templateString instanceof String)) {
         throw new TypeError('templateString должен быть строкой');
     }
-    if (typeof dataObject != 'object') {
+    if (typeof dataObject !== 'object') {
         throw new TypeError('dataObject должен быть объектом');
     }
     console.log(typeof(dataObject));
@@ -37,10 +37,7 @@ function templateEngine(templateString, dataObject) {
  * @returns {*} Значение переменной или пустая строка, если переменной не найдено
  */
 const getVariableValue = (variableText, dataObject) => {
-    const parts = variableText.split('.');
-    let variableValue = dataObject;
-    for (let i = 0; i < parts.length; i++) {
-        variableValue = variableValue[parts[i]] ? variableValue[parts[i]] : '';
-    }
-    return variableValue;
+    return variableText.split('.').reduce((variableValue, part) => {
+        return variableValue = variableValue[part] ? variableValue[part] : '';
+    }, dataObject);
 };
