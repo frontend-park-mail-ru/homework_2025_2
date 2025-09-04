@@ -16,12 +16,15 @@
  * @returns {*} Значение свойства или пустая строка, если свойство не найдено
  */
 const getValue = (variableName, data) => {
-    if (!variableName || typeof variableName !== 'string') {
+    if (!variableName || !(typeof variableName === 'string' || variableName instanceof String)) {
         return '';
     }
+    variableName = String(variableName);
+
     if (typeof data !== 'object' || data === null || Array.isArray(data)) {
         throw new TypeError('Аргумент data должен быть объектом')
     }
+    
     let value = '';
     value = variableName.split('.').reduce((cur, part) => {
         return cur && cur[part] !== undefined ? cur[part] : '';
@@ -51,9 +54,10 @@ const getValue = (variableName, data) => {
  * @returns {string}
  */
 const templateEngine = (template, data) => {
-    if (typeof template !== 'string') {
+    if (!(typeof template === 'string' || template instanceof String)) {
         throw new TypeError('Аргумент template должен быть строкой');
     }
+    template = String(template);
 
     if (typeof data !== 'object' || data === null || Array.isArray(data)) {
         throw new TypeError('Аргумент data должен быть объектом')

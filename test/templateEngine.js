@@ -105,4 +105,11 @@ QUnit.module("Тестируем функцию templateEngine", function() {
         const result = templateEngine(template, data);
         assert.equal(result, "Флаг: true");
     });
+
+    QUnit.test("Работает правильно с объектами-обертками String", function(assert) {
+        const template = new String("Флаг: {{flag}}");
+        const data = { flag: true };
+        const result = templateEngine(template, data);
+        assert.equal(result, "Флаг: true");
+    });
 });
