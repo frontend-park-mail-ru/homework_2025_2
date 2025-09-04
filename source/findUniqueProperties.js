@@ -1,14 +1,18 @@
 'use strict';
 
 /**
- * Функция, определяющая максимальное число в массиве
- * @param {Array<Number>} numbers - массив чисел
+ * Функция, выделяющая и возвращающая объект уникальных свойств из двух передаваемых объектов
+ * @param {Object} Object1 - первый передаваемый объект
+ * @param {Object} Object2 - второй передаваемый объект
  *
  * @example
- * // returns 3
- * max([1, 2, 3]);
+ * // returns { a: 1, d: 5 }
+ * findUniqueProperties(
+ *             { a: 1, b: 2, c: 3 },
+ *             { b: 2, c: 4, d: 5 }
+ *         );
  *
- * @returns {Number}
+ * @returns {Object}
  */
 
 function findUniqueProperties (object1, object2) {
