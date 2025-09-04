@@ -48,4 +48,18 @@ QUnit.module('Тестируем функцию plainify', () => {
 
         assert.deepEqual(result, { list: [1, 2, 3], x: 10 }, 'Массив должен остаться как значение целиком');
     });
+
+    QUnit.test('Работает правильно с undefined', (assert) => {
+        const originalObject = undefined;
+        const result = plainify(originalObject);
+
+        assert.deepEqual(result, {}, 'undefined должен возвращать пустой объект');
+    });
+
+    QUnit.test('Работает правильно с простым объектом без вложенности', (assert) => {
+        const originalObject = { a: 1, b: 2 };
+        const result = plainify(originalObject);
+
+        assert.deepEqual(result, { a: 1, b: 2 }, 'Простой объект должен остаться без изменений');
+    });
 });
