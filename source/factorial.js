@@ -9,6 +9,7 @@
  * @example
  * factorial(5); // 120
  */
+
 const factorial = n => {
     if (!Number.isInteger(n) || n < 0) {
         throw new Error('Факториал определен только для целых неотрицательных чисел');
