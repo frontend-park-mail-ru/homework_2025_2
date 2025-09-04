@@ -11,7 +11,7 @@
  * @returns {*}
  */
 const deepClone = (obj) => {
-  if (typeof obj !== "object" || obj == null || obj == undefined) return obj;
+  if (typeof obj !== "object" || obj === null) return obj;
 
   if (Array.isArray(obj)) {
     return obj.map((val) => deepClone(val));

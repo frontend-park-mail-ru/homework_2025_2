@@ -92,6 +92,18 @@ QUnit.module("Тестируем функцию deepClone", () => {
       Infinity,
       "Копия примитива должна быть равна оригиналу"
     );
+
+    assert.deepEqual(
+      deepClone(null),
+      null,
+      "Копия примитива должна быть равна оригиналу"
+    );
+
+    assert.deepEqual(
+      deepClone(undefined),
+      undefined,
+      "Копия примитива должна быть равна оригиналу"
+    );
   });
 
   QUnit.test(
@@ -111,4 +123,24 @@ QUnit.module("Тестируем функцию deepClone", () => {
       );
     }
   );
+
+  QUnit.test("Работает правильно для всех примитивов", (assert) => {
+    const original = {
+      a: 1,
+      string: "string",
+      c: 439854287524879524n,
+      d: true,
+      e: undefined,
+      f: Symbol("test"),
+      g: null,
+    };
+    const cloned = deepClone(original);
+
+    assert.deepEqual(cloned, original, "Копия должна быть равна оригиналу");
+    assert.notStrictEqual(
+      cloned,
+      original,
+      "Копия должна быть независимой от оригинала"
+    );
+  });
 });
