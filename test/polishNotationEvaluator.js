@@ -24,51 +24,37 @@ QUnit.module("Тестируем функцию polishNotationEvaluator", functi
 
     QUnit.test("Правильно вычисляет пустое выражение", function(assert) {
         const input = "";
-        const result = polishNotationEvaluator(input);
-
-        assert.equal(isNaN(result), true);
+        assert.throws(() => polishNotationEvaluator(input), Error);
     });
 
     QUnit.test("Правильно обрабатывает некорректный ввод", function(assert) {
         const input = null;
-        const result = polishNotationEvaluator(input);
-
-        assert.equal(isNaN(result), true);
+        assert.throws(() => polishNotationEvaluator(input), Error);
     });
 
     QUnit.test("Правильно обрабатывает выражение с делением на ноль", function(assert) {
         const input = "/ 4 0"; // 4 / 0
-        const result = polishNotationEvaluator(input);
-
-        assert.equal(isNaN(result), true);
+        assert.throws(() => polishNotationEvaluator(input), Error);
     });
 
     QUnit.test("Правильно обрабатывает выражение с недостающими операндами", function(assert) {
         const input = "+ 1"; // Not enough operands
-        const result = polishNotationEvaluator(input);
-
-        assert.equal(isNaN(result), true);
+        assert.throws(() => polishNotationEvaluator(input), Error);
     });
 
     QUnit.test("Правильно обрабатывает выражение с лишними операндами", function(assert) {
         const input = "+ 1 2 3"; // Too many operands
-        const result = polishNotationEvaluator(input);
-
-        assert.equal(isNaN(result), true);
+        assert.throws(() => polishNotationEvaluator(input), Error);
     });
 
     QUnit.test("Правильно обрабатывает выражение с неверным форматом", function(assert) {
         const input = "+ 1 2 a"; // Wrong tokens
-        const result = polishNotationEvaluator(input);
-
-        assert.equal(isNaN(result), true);
+        assert.throws(() => polishNotationEvaluator(input), Error);
     });
 
     QUnit.test("Правильно обрабатывает выражение без операндов", function(assert) {
         const input = "+";
-        const result = polishNotationEvaluator(input);
-
-        assert.equal(isNaN(result), true);
+        assert.throws(() => polishNotationEvaluator(input), Error);
     });
 
     QUnit.test("Правильно обрабатывает выражение с пробелами", function(assert) {
