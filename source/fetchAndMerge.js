@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Функция загружает данные с нескольких URL и объединяет их в один объект
  * Если один ключ встречается в нескольких объектах, значения собираются в массив
@@ -15,30 +17,39 @@
  * 
  * @returns {Object} Объединенный объект со всеми уникальными ключами и значениями
  */
-
 const fetchAndMerge = async (urls) => {
-    const result = {};
+  if (!Array.isArray(urls)) {
+    throw new Error('Параметр urls должен быть массивом')
+  }
+  const result = {};
 
-    for (const url of urls) {
-      try {
-        const response = await fetch(url);
-        if (!response.ok) continue;
-        
-        const data = await response.json();
-        
-        for (const [key, value] of Object.entries(data)) {
-          if (result[key] === undefined) {
-            result[key] = [value];
-          } else {
-            if (!result[key].includes(value)) {
-              result[key].push(value);
-            }
-          }
-        }
-      } catch (error) {
-        console.warn(`Не удалось загрузить данные с ${url}:`, error);
+  for (const url of urls) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) continue;
+      
+      const data = await response.json();
+
+      if (typeof data !== 'object' || data === null) {
+        console.warn(`Данные с ${url} не являются объектом`);
+        continue;
       }
+
+      for (const [key, value] of Object.entries(data)) {
+        if (result[key] === undefined) {
+          result[key] = [value];
+        } else {
+          result[key].push(value);
+        }
+      }
+    } catch (error) {
+      console.warn(`Не удалось загрузить данные с ${url}:`, error);
     }
-    
-    return result;
+  }
+  
+  for (const key in result) {
+    result[key] = [...new Set(result[key])];
+  }
+
+  return result;
 };
