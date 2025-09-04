@@ -70,4 +70,4 @@ function mergeObjects(target, source) {
         }
     }
     return target;
-};
+}
