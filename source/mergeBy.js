@@ -16,27 +16,14 @@
  */
 function mergeBy(objects1, objects2, keyPooling) {
     let map = new Map();
-    
-    const mergeObjects = function(obj1, obj2) {
-        const result = { ...obj1 };
-        
-        for (let key in obj2) {
-            if (key in obj2) {
-                if (Array.isArray(obj1[key]) && Array.isArray(obj2[key])) {
-                    result[key] = [...obj1[key]];
-                    obj2[key].forEach(item => {
-                        if (!result[key].includes(item)) {
-                            result[key].push(item);
-                        }
-                    });
-                } else {
-                    result[key] = obj2[key];
-                }
-            }
-        }
-        return result;
-    };
 
+    /**
+     * Функция, которая обрабатывает массив объектов, объединяя объекты с одинаковыми значениями keyPooling.
+     *
+     * @param {Array<Object>} objects - массив объектов для обработки
+     * @param {String} keyPooling - ключ, используемый для группировки и объединения объектов. Должен быть определен в контексте вызова функции.
+     * @param {Map<Object, Object>} map - словрь, используемый для хранения и обновления объединенных объектов. Должен быть определен в контексте вызова функции.
+    */
     const processArray = function(objects){
         for (const item of objects){
             if (!(keyPooling in item)){
@@ -49,8 +36,38 @@ function mergeBy(objects1, objects2, keyPooling) {
             }
         }
     }
-    
+
     processArray(objects1);
     processArray(objects2);
     return Array.from(map.values())
 }
+
+/**
+ * Функция, объединяющая два объекта, добавляя свойства из source в target.
+ * Если оба объекта содержат одинаковое свойство, являющееся массивом, то массивы объединяются в один массив без дупликатов.
+ * В противном случае остаётся свойство target
+ * @param {Object} target - объект, в который будут добавлены свойства. Этот объект изменяется
+ * @param {Object} source - объект, из которого будут взяты свойства
+ * 
+ * @example
+ * // returns { id: 1, name: "Ilya", age: 20}
+ * mergeObjects({ id: 1, name: "Ilya"}, { id: 1, age: 20})
+ * 
+ * @returns {Object}
+ */
+function mergeObjects(target, source) {
+    for (let key in source) {
+        if (key in target) {
+            if (Array.isArray(target[key]) && Array.isArray(source[key])) {
+                source[key].forEach(item => {
+                    if (!target[key].includes(item)) {
+                        target[key].push(item);
+                    }
+                });
+            }
+        } else {
+            target[key] = source[key];
+        }
+    }
+    return target;
+};
