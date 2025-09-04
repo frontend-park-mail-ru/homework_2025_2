@@ -3,19 +3,18 @@
  * возвращает количеcтсво email, список уникальных email, самый частотный email
  * @param {string|String} rawString - строка
  *
+ * @returns {{
+ *   emailCount: number,
+ *   uniqueEmails: Array<string>,
+ *   mostFrequentEmail: string
+ * }|undefined}
  *
  * @example
  * const result = emailAnalyzer("test@mail.com, user@mail.com");
  * // result.emailCount === 2
  * // result.uniqueEmails = ['test@mail.com', 'user@mail.com']
  * // result.mostFrequentEmail = 'test@mail.com'
- * @returns {{
- *   emailCount: number,
- *   uniqueEmails: Array<string>,
- *   mostFrequentEmail: string
- * }|undefined}
  */
-
 function emailAnalyzer(rawString)
 {
     if (typeof rawString!=="string" && !(rawString instanceof String))
