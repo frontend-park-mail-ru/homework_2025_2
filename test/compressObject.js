@@ -28,4 +28,50 @@ QUnit.module("Тестируем функцию compressObject", function() {
 
         assert.deepEqual(result, {}, "Пустой объект должен вернуть пустой объект.");
     });
+
+    QUnit.test("Работает с типами данных Boolean и BigInt", function(assert) {
+        const result = compressObject({
+            bigInt: 1234567890123456789012345678901234567890n,
+            booleanTrue: true,
+            booleanFalse: false,
+        });
+
+        assert.deepEqual(result, {
+            bigInt: 1234567890123456789012345678901234567890n, 
+            booleanTrue: true,
+            booleanFalse: false
+        }, "Типы данных Boolean и BigInt возвращаются");
+    });
+
+    QUnit.test("Работает с NaN, 0, Infinity и -Infinity", function(assert) {
+        const result = compressObject({
+            nan: NaN,
+            zero: 0,
+            infinity: Infinity,
+            minusInfinity: -Infinity,
+        });
+
+        assert.deepEqual(result, {
+            nan: NaN,
+            zero: 0,
+            infinity: Infinity,
+            minusInfinity: -Infinity
+        }, "NaN, 0, Infinity и -Infinity возвращаются");
+    });
+
+    QUnit.test("Работает с объектами и массивами", function(assert) {
+        const result = compressObject({
+            object: {age: 22},
+            emptyObject: {},
+            emptyArray: [],
+            array: [15, 6, 2005],
+        });
+
+        assert.deepEqual(result, {
+            object: {age: 22},
+            emptyObject: {},
+            emptyArray: [],
+            array: [15, 6, 2005]
+        }, "Объекты и массивы возвращаются");
+    });
 });
