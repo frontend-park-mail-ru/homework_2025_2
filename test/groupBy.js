@@ -85,4 +85,62 @@ QUnit.module('Тестируем функцию groupBy', () => {
             ]
         }, 'Все объекты должны быть сгруппированы под одним значением');
     });
+
+    QUnit.test('Обрабатывает отсутствие ключа в объектах', (assert) => {
+        const data = [
+            { id: 1, category: 'fruit', name: 'apple' },
+            { id: 2, name: 'banana' }, 
+            { id: 3, category: 'fruit', name: 'orange' },
+            { id: 4, category: null, name: 'grape' }, 
+            { id: 5, category: undefined, name: 'mango' } 
+        ];
+        
+        const result = groupBy(data, 'category');
+        
+        assert.deepEqual(result, {
+            fruit: [
+                { id: 1, category: 'fruit', name: 'apple' },
+                { id: 3, category: 'fruit', name: 'orange' }
+            ],
+            null: [
+                { id: 4, category: null, name: 'grape' }
+            ],
+            undefined: [
+                { id: 2, name: 'banana' },
+                { id: 5, category: undefined, name: 'mango' }
+            ]
+        }, 'Корректно обрабатывает отсутствие ключа и null/undefined значения');
+    });
+
+    QUnit.test('Выбрасывает ошибки при невалидных аргументах', (assert) => {
+        assert.throws(
+            () => groupBy(null, 'category'),
+            TypeError,
+            'Должна выбрасываться TypeError при null вместо массива'
+        );
+        
+        assert.throws(
+            () => groupBy(undefined, 'category'),
+            TypeError,
+            'Должна выбрасываться TypeError при undefined вместо массива'
+        );
+        
+        assert.throws(
+            () => groupBy('not array', 'category'),
+            TypeError,
+            'Должна выбрасываться TypeError при строке вместо массива'
+        );
+        
+        assert.throws(
+            () => groupBy(123, 'category'),
+            TypeError,
+            'Должна выбрасываться TypeError при числе вместо массива'
+        );
+        
+        assert.throws(
+            () => groupBy({}, 'category'),
+            TypeError,
+            'Должна выбрасываться TypeError при объекте вместо массива'
+        );
+    });
 });
