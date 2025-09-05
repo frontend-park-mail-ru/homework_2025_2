@@ -45,4 +45,22 @@ QUnit.module("Тестируем функцию findUniqueProperties", function(
 
         assert.deepEqual(result, { a: 1, b: 2, c: 3, d: 2, e: 4, f: 5 }, "Должны вернуть всю информацию из обоих объектов.");
     });
+    
+    QUnit.test("Работает правильно для объектов с хранением различных типов данных", function(assert) {
+        const result = findUniqueProperties(
+            { a: { a: "a", b: "b" }, b: { "c" }, c: "d" },
+            { a: { a: "a", b: "b" }, b: { "c", "d" }, d: true }
+        );
+
+        assert.deepEqual(result, { c: "d", d: true }, "Должны вернуть уникальные свойства с и d.");
+    });
+
+    QUnit.test("Работает правильно для ошибочных типов данных вместо объектов", function(assert) {
+        const result = findUniqueProperties(
+            "poopaapopa",
+            false
+        );
+
+        assert.deepEqual(result, {  }, "Должны вернуть пустой объект.");
+    });
 });
