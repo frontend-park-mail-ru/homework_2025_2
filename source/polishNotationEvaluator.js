@@ -24,12 +24,7 @@ const polishNotationEvaluator = expression => {
         },
     };
 
-    const tokens = expression.trim().split(' ');
-    const stack = [];
-
-    for (let i = tokens.length - 1; i >= 0; i--) {
-        const token = tokens[i];
-
+    let result = expression.trim().split(' ').reduceRight((stack, token) => {
         if (operations[token]) {
             if (stack.length < 2) {
                 throw new Error('Not enough operands for operation');
@@ -44,6 +39,8 @@ const polishNotationEvaluator = expression => {
             }
 
             stack.push(value);
+
+            return stack;
         } else {
             const num = parseInt(token);
 
@@ -52,12 +49,14 @@ const polishNotationEvaluator = expression => {
             }
             
             stack.push(num);
-        }
-    }
 
-    if (stack.length !== 1) {
+            return stack;
+        }
+    }, []);
+
+    if (result.length !== 1) {
         throw new Error('Too many operands in expression');
     }
 
-    return stack[0];
+    return result[0];
 };
