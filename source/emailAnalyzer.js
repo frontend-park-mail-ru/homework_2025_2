@@ -28,7 +28,7 @@ const emailAnalyzer = text => {
     let mostfrequentEmails = '';
     let max = 0;
 
-    for (const[email, count] of Object.entries(email_count)){
+    for (const[email, count] of Object.entries(emails_count)){
         if (count > max){
             max = count;
             mostfrequentEmails = email;
