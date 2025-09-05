@@ -65,20 +65,22 @@ QUnit.module("Тестируем функцию deepMerge", function() {
     });
 
     QUnit.test("Работает с пустым исходным объектом", function(assert) {
-        const source = {
+        const filldObj = {
             name: "Алиса",
             age: 25
         };
 
-        const target = {};
+        const emptyObj = {};
 
         const expected = {
             name: "Алиса",
             age: 25,
         };
 
-        const result = deepMerge(source, target);
-        assert.deepEqual(result, expected, "Должно возвращать исходный объект при отсутствии второго");
+        let result = deepMerge(filldObj,emptyObj);
+        assert.deepEqual(result, expected, "Должно возвращать первый объект при отсутствии второго");
+        result = deepMerge(emptyObj, filldObj);
+        assert.deepEqual(result, expected, "Должно возвращать второй объект при отсутствии первого");
     });
 
     QUnit.test("Работает с двумя пустым исходным объектом", function(assert) {
@@ -155,7 +157,7 @@ QUnit.module("Тестируем функцию deepMerge", function() {
         const expected = [1, 2, 3];
 
         const result = deepMerge(source, target);
-        assert.deepEqual(result, expected, "Должно корректно объединять массивы по индексам");
+        assert.deepEqual(result, expected, "Должно корректно объединять когда source массив");
     });
 
     QUnit.test("Работает, если оба входных значения массивы", function(assert) {
@@ -178,7 +180,7 @@ QUnit.module("Тестируем функцию deepMerge", function() {
         };
 
         const result = deepMerge(source, target);
-        assert.deepEqual(result, expected, "Должно Объединяет объект и массив");
+        assert.deepEqual(result, expected, "Должно объединяет объект и массив");
     });
 
 });
