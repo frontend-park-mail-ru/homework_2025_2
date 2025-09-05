@@ -25,6 +25,7 @@ const fetchAndMerge = async (urls) => {
 
   for (const url of urls) {
     try {
+
       const response = await fetch(url);
       if (!response.ok) continue;
       
@@ -43,7 +44,7 @@ const fetchAndMerge = async (urls) => {
         }
       }
     } catch (error) {
-      console.warn(`Не удалось загрузить данные с ${url}:`, error);
+      throw new Error(`Ошибка при обработке URL ${url}: ${error.message}`);
     }
   }
   
