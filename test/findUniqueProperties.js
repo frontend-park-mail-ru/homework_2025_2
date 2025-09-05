@@ -48,14 +48,14 @@ QUnit.module("Тестируем функцию findUniqueProperties", function(
     
     QUnit.test("Работает правильно для объектов с хранением различных типов данных", function(assert) {
         const result = findUniqueProperties(
-            { a: { a: "a", b: "b" }, b: { "c" }, c: "d" },
-            { a: { a: "a", b: "b" }, b: { "c", "d" }, d: true }
+            { a: { a: "a", b: "b" }, b: { a: "c" }, c: "d" },
+            { a: { a: "a", b: "b" }, b: { a: "c", b: "d" }, d: true }
         );
 
         assert.deepEqual(result, { c: "d", d: true }, "Должны вернуть уникальные свойства с и d.");
     });
 
-    QUnit.test("Работает правильно для ошибочных типов данных вместо объектов", function(assert) {
+    QUnit.test("Работает правильно для ошибочных типов данных", function(assert) {
         const result = findUniqueProperties(
             "poopaapopa",
             false

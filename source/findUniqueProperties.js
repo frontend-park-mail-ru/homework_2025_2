@@ -11,6 +11,9 @@
  */
 
 function findUniqueProperties (object1, object2) {
+    if (typeof object1 != "object" || typeof object2 != "object")
+        return {};
+
     const uniqueObject = {};
     
     for (let key in object1)
