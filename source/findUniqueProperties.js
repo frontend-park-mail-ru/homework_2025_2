@@ -2,16 +2,11 @@
 
 /**
  * Функция, выделяющая и возвращающая объект уникальных свойств из двух передаваемых объектов
- * @param {Object} Object1 - первый передаваемый объект
- * @param {Object} Object2 - второй передаваемый объект
- *
+ * @param {Object} object1 - первый передаваемый объект
+ * @param {Object} object2 - второй передаваемый объект
  * @example
  * // returns { a: 1, d: 5 }
- * findUniqueProperties(
- *             { a: 1, b: 2, c: 3 },
- *             { b: 2, c: 4, d: 5 }
- *         );
- *
+ * findUniqueProperties({ a: 1, b: 2, c: 3 }, { b: 2, c: 4, d: 5 });
  * @returns {Object}
  */
 
