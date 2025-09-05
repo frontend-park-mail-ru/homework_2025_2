@@ -6,6 +6,10 @@
  * @param {Array<Object>} objects2 - второй массив объектов
  * @param {String} keyPooling - ключ, по которому происходит объединение
  * 
+ * @throws {Error} если objects1 не является массивом
+ * @throws {Error} если objects2 не является массивом
+ * @throws {Error} если keyPooling не является строкой
+ * 
  * @example
  * // returns [{ id: 1, name: "Ilya", age: 20}, {id: 2, name "Petya"}]
  * mergeBy([{ id: 1, name: "Ilya"}, {id: 2, name: "Petya"}],
@@ -14,8 +18,17 @@
  * 
  * @returns {Array<Object>}
  */
-function mergeBy(objects1, objects2, keyPooling) {
-    let map = new Map();
+const mergeBy = (objects1, objects2, keyPooling) => {
+    if (!Array.isArray(objects1)){
+        throw new Error("objects1 must be an array")
+    }
+    if (!Array.isArray(objects2)){
+        throw new Error("objects2 must be an array")
+    }
+    if (typeof keyPooling !== "string"){
+        throw new Error("keyPooling must be a string")
+    }
+    const map = new Map();
 
     /**
      * Функция, которая обрабатывает массив объектов, объединяя объекты с одинаковыми значениями keyPooling.
@@ -24,22 +37,23 @@ function mergeBy(objects1, objects2, keyPooling) {
      * @param {String} keyPooling - ключ, используемый для группировки и объединения объектов. Должен быть определен в контексте вызова функции.
      * @param {Map<Object, Object>} map - словрь, используемый для хранения и обновления объединенных объектов. Должен быть определен в контексте вызова функции.
     */
-    const processArray = function(objects){
+    const processArray = (objects) => {
         for (const item of objects){
             if (!(keyPooling in item)){
-                continue
+                continue;
             }
-            if (map.has(item[keyPooling])){
-                map.set(item[keyPooling], mergeObjects(map.get(item[keyPooling]), item))
+
+            const keyValue = item[keyPooling];
+            if (map.has(keyValue)){
+                map.set(keyValue, mergeObjects(map.get(keyValue), item));
             } else{
-                map.set(item[keyPooling], {...item})
+                map.set(keyValue, {...item});
             }
         }
     }
 
-    processArray(objects1);
-    processArray(objects2);
-    return Array.from(map.values())
+    processArray(Array.prototype.concat(objects1, objects2));
+    return Array.from(map.values());
 }
 
 /**
@@ -55,8 +69,8 @@ function mergeBy(objects1, objects2, keyPooling) {
  * 
  * @returns {Object}
  */
-function mergeObjects(target, source) {
-    for (let key in source) {
+const mergeObjects = (target, source) => {
+    for (const key in source) {
         if (key in target) {
             if (Array.isArray(target[key]) && Array.isArray(source[key])) {
                 source[key].forEach(item => {
