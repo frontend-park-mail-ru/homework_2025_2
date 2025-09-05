@@ -24,29 +24,31 @@ QUnit.module("Тестируем функцию polishNotationEvaluator", functi
 
     QUnit.test("Правильно вычисляет пустое выражение", function(assert) {
         const input = "";
-        const result = polishNotationEvaluator(input);
 
-        assert.equal(isNaN(result), true);
+        assert.throws(() => polishNotationEvaluator(input), Error);
     });
 
     QUnit.test("Правильно обрабатывает деление на ноль", function(assert) {
         const input = "/ + 2 3 0";
-        const result = polishNotationEvaluator(input);
 
-        assert.equal(isNaN(result), true);
+        assert.throws(() => polishNotationEvaluator(input), Error);
     });
 
     QUnit.test("Правильно обрабатывает тип входных данных", function(assert) {
         const input = 1337;
-        const result = polishNotationEvaluator(input);
 
-        assert.equal(isNaN(result), true);
+        assert.throws(() => polishNotationEvaluator(input), Error);
     });
 
     QUnit.test("Правильно обрабатывает некорректное выражение", function(assert) {
-            const input = "+ - 2 3 4 5 6 7 8 9 10";
-            const result = polishNotationEvaluator(input);
+        const input = "+ - 2 3 4 5 6 7 8 9 10";
 
-            assert.equal(isNaN(result), true);
+        assert.throws(() => polishNotationEvaluator(input), Error);
+    });
+
+    QUnit.test("Правильно обрабатывает выражение с некорректным операндом", function(assert) {
+        const input = "+ 2 a";
+        
+        assert.throws(() => polishNotationEvaluator(input), Error);
     });
 });

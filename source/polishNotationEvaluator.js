@@ -12,7 +12,7 @@
  */
 const polishNotationEvaluator = expression => {
     if (typeof expression !== 'string' || expression.trim() === '') {
-        return NaN;
+        throw new Error(`Invalid expression: ${expression}`);
     }
 
     const operations = {
@@ -32,7 +32,7 @@ const polishNotationEvaluator = expression => {
 
         if (operations[token]) {
             if (stack.length < 2) {
-                return NaN;
+                throw new Error('Not enough operands for operation');
             }
 
             const a = stack.pop();
@@ -40,7 +40,7 @@ const polishNotationEvaluator = expression => {
             const value = operations[token](a, b);
 
             if (isNaN(value)) {
-                return NaN;
+                throw new Error('Result of operation must be a number');
             }
 
             stack.push(value);
@@ -48,12 +48,16 @@ const polishNotationEvaluator = expression => {
             const num = parseInt(token);
 
             if (isNaN(num)) {
-                return NaN;
+                throw new Error('Invalid operand in expression');
             }
             
             stack.push(num);
         }
     }
 
-    return stack.length === 1 ? stack[0] : NaN;
+    if (stack.length !== 1) {
+        throw new Error('Too many operands in expression');
+    }
+
+    return stack[0];
 };
