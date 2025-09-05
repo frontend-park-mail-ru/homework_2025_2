@@ -10,7 +10,6 @@
  * 
  * @return {Object} Объект с результатами анализа
  */
-
 const emailAnalyzer = text => { 
     const email_regs =  /[a-zA-Z0-9_%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/g;
 
