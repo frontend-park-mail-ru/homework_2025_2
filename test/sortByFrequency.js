@@ -18,4 +18,16 @@ QUnit.module("Тестируем функцию sortByFrequency", function() {
 
         assert.deepEqual(result, [5], "Массив с одним элементом должен вернуть тот же элемент.");
     });
+
+    QUnit.test("Работает правильно с массивом из одинаковых чисел", function(assert){
+        const result = sortByFrequency([10, 10, 10, 10]);
+
+        assert.deepEqual(result, [10, 10, 10, 10], "Массив должен вернуться в изначальном виде");
+    })
+
+    QUnit.test("Работает верно с нулями и отрицательными числами", function(assert){
+        const result = sortByFrequency([0,-1, -2, -3, 0, -1, -3, -3, 0, 0]);
+
+        assert.deepEqual(result, [0, 0, 0, 0, -3, -3, -3, -1, -1, -2], "Массив должен корректно работать с нулём и отрицательными числами");
+    })
 });
