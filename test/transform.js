@@ -88,4 +88,29 @@ QUnit.module('Тестируем функцию transform', () => {
             e: undefined
         }, 'Все значения должны быть правильно обработаны в зависимости от их типа');
     });
+
+    QUnit.test('Выбрасывает ошибку когда transformFn не функция', (assert) => {
+        const originalObject = { a: 1, b: 2, c: 3 };
+
+        assert.throws(
+            () => transform(originalObject, null),
+            'Должна быть ошибка при transformFn = null'
+        );
+
+        assert.throws(
+            () => transform(originalObject, 'blablabla'),
+            'Должна быть ошибка при transformFn = string'
+        );
+
+        assert.throws(
+            () => transform(originalObject, {}),
+            'Должна быть ошибка при transformFn = object'
+        );
+
+        assert.throws(
+            () => transform(originalObject),
+            'Должна быть ошибка при отсутствии transformFn'
+        );
+    });
 });
+

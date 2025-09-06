@@ -14,21 +14,27 @@
  */
 
 const transform = (obj, transformFn) => {
-    
+    if (typeof transformFn !== 'function') {
+        throw new TypeError('transformFn must be a function')
+    }
+
+    if (typeof obj !== 'object' || obj === null) {
+        return transformFn(obj)
+    }
+
+    let res = Array.isArray(obj) ? [] : {}
+
     for (const key in obj) {
-        switch (typeof obj[key]) {
-            case "object":
-                obj[key] = transform(obj[key], transformFn)
-                break
-            case "array":
-                for (let i = 0; i < length(obj[key]); i++) {
-                    obj[key][i] = transformFn(obj[key][i])
-                }
-                break
-            default: 
-                obj[key] = transformFn(obj[key])
+        let value = obj[key]
+
+        if (typeof value === 'object' && value !== null) {
+            res[key] = transform(value, transformFn)
+        } else {
+            res[key] = transformFn(value)
         }
     }
 
-    return obj
+    return res
 }
+
+// Код будет работать и без строгого режима, но использование 'use strict' помогает сразу избежать некоторых ошибок при написании кода
