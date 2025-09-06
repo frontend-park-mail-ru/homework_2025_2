@@ -15,7 +15,7 @@ const plainify = (obj, prefix = '') => {
     const out = {};
     for (const [key, val] of Object.entries(obj || {})) {
         const path = prefix ? `${prefix}.${key}` : key;
-        if (val !== null && typeof val === 'object' && !Array.isArray(val)) {
+        if (val !== null && typeof val === 'object' && !Array.isArray(val) && val.constructor === Object) {
             Object.assign(out, plainify(val, path));
         } else {
             out[path] = val;
@@ -23,3 +23,4 @@ const plainify = (obj, prefix = '') => {
     }
     return out;
 };
+
