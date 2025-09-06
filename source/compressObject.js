@@ -5,12 +5,11 @@
  * @param {Object} obj - подаваемый объект
  * 
  * @example
- * // returns {name: "Андрей", country: "Россия"}
+ * returns {name: "Андрей", country: "Россия"}
  * compressObject({name: "Андрей", age: null, city: "", country: "Россия", occupation: undefined});
  * 
  * @returns {Object} newObject - новый объект без null, undefined, "". 
  */
-
 var compressObject = function (obj) {
     let newObj = {}
     for (const key in obj){
