@@ -2,8 +2,8 @@
 
 'use strict';
 
-QUnit.module("Тестируем функцию partition", function() {
-    QUnit.test("Работает правильно при разделении массива на основе предиката", function(assert) {
+QUnit.module("Тестируем функцию partition", function () {
+    QUnit.test("Работает правильно при разделении массива на основе предиката", function (assert) {
         const isEven = num => num % 2 === 0;
         const result = partition([1, 2, 3, 4, 5, 6], isEven);
 
@@ -13,7 +13,7 @@ QUnit.module("Тестируем функцию partition", function() {
         ]);
     });
 
-    QUnit.test("Работает правильно при разделении с предикатом, возвращающим true для всех элементов", function(assert) {
+    QUnit.test("Работает правильно при разделении с предикатом, возвращающим true для всех элементов", function (assert) {
         const isPositive = num => num > 0;
         const result = partition([1, 2, 3, 4, 5], isPositive);
 
@@ -23,7 +23,17 @@ QUnit.module("Тестируем функцию partition", function() {
         ]);
     });
 
-    QUnit.test("Правильно делит массив объектов по свойству", function(assert) {
+    QUnit.test("Работает правильно при разделении с предикатом, возвращающим false для всех элементов", function (assert) {
+        const isNegative = num => num < 0;
+        const result = partition([1, 2, 3, 4, 5], isNegative);
+
+        assert.deepEqual(result, [
+            [],
+            [1, 2, 3, 4, 5]
+        ]);
+    });
+
+    QUnit.test("Правильно делит массив объектов по свойству", function (assert) {
         const isAdult = person => person.age >= 18;
         const result = partition([
             { name: "Alice", age: 17 },
@@ -40,6 +50,16 @@ QUnit.module("Тестируем функцию partition", function() {
                 { name: "Alice", age: 17 },
                 { name: "Charlie", age: 15 }
             ]
+        ]);
+    });
+
+    QUnit.test("Пустой массив возвращает два пустых массива", function (assert) {
+        const always = x => true;
+        const result = partition([], always);
+
+        assert.deepEqual(result, [
+            [],
+            []
         ]);
     });
 });
