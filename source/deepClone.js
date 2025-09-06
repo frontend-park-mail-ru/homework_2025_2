@@ -1,3 +1,4 @@
+'use strict';
 /**
  * Функция глубокой копии объекта
  * @param {*} obj - Объект, который нужно скопировать
@@ -13,7 +14,7 @@
  * const original = [1, 2, [3, 4]];
  * const copied = deepClone(original);
  */
-function deepClone(obj) {
+const deepClone = (obj) => {
     if (obj === null || typeof obj !== 'object') {
         return obj;
     }
@@ -26,15 +27,10 @@ function deepClone(obj) {
         return obj.map(item => deepClone(item));
     }
 
-    if (typeof obj === 'object') {
-        const clonedObj = {};
-        for (const key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                clonedObj[key] = deepClone(obj[key]);
-            }
-        }
-        return clonedObj;
-    }
+    const clonedObj = {};
+    Object.entries(obj).forEach(([key, value]) => {
+        clonedObj[key] = deepClone(value);
+    });
 
-    return obj;
+    return clonedObj;
 }
