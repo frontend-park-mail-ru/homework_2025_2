@@ -30,4 +30,10 @@ QUnit.module("Тестируем функцию fibonacciGenerator", function() 
 
         assert.deepEqual([...fibGen], [], "Генерация 0 должна вернуть пустой массив.");
     });
+
+    QUnit.test("Работает правильно при передаче неверного типа данных", function(assert) {
+        const fibGen = fibonacciGenerator("korobka");
+
+        assert.deepEqual([...fibGen], [], "Генерация неверного типа данных должна вернуть пустой массив.");
+    });
 });

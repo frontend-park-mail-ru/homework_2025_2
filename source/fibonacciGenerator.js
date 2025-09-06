@@ -8,15 +8,19 @@
  * // returns [0, 1, 1]
  * fibonacciGenerator(3)
  * 
- * @returns {number[]} - массив чисел
+ * @yields {number} - следующее число последовательности Фибоначчи
  */
-const fibonacciGenerator = number => {
-    let fibonacci = []
-    if (number == 1) fibonacci.push(0);
-    else if (number > 2) {
-        fibonacci.push(0,1)
-        for(let i = 2; i < number; i++) 
-            fibonacci.push(fibonacci[i-1] + fibonacci[i-2])
+
+function* fibonacciGenerator(number){
+    if (number < 1 || typeof(number) != "number") return [];
+    
+    let a = 0;
+    let b = 1;
+    let tmp;
+    for (let i = 0; i < number; i++){
+        yield a;
+        tmp = a;
+        a = b;
+        b = tmp + a;
     }
-    return fibonacci
 }
