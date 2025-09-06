@@ -20,6 +20,7 @@ const partition = (arr, predicate) => {
     return arr.reduce(
         (acc, item) => {
             if (item === null) throw new TypeError('Null elements not allowed');
+            if (item === undefined) throw new TypeError('Undefined elements not allowed');
             if (typeof item === 'symbol') throw new TypeError('Symbol elements not allowed');
             if (typeof item === 'number' && Number.isNaN(item)) throw new TypeError('NaN not allowed');
             (predicate(item) ? acc[0] : acc[1]).push(item);
