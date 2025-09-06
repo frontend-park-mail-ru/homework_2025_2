@@ -13,6 +13,15 @@
  * @returns {Object} result - новый объект без значений null, undefined, ""
 */
 function compressObject(obj){
+
+    if (typeof obj !== "object") {
+        return{};
+    }
+
+    if (obj === null) {
+        return{};
+    }
+
     return Object.fromEntries(
         Object.entries(obj).filter(([key, value]) =>
             value !== null && value !== undefined && value !== ""

@@ -74,4 +74,10 @@ QUnit.module("Тестируем функцию compressObject", function() {
             array: [15, 6, 2005]
         }, "Объекты и массивы возвращаются");
     });
+
+    QUnit.test("Правильная обработка типов данных, отличных от объекта", function(assert) {
+        const result = compressObject(42, null, undefined, "Today is a good day");
+
+        assert.deepEqual(result, {}, "Поданные на вход значения не являются объектами или null");
+    });
 });
