@@ -1,18 +1,16 @@
 /**
  * Функция, определяющая максимальное число в массиве
- * @param {Array<Array<Number>>} numbers - массив чисел
+ * @param numbers - массив сотстоящий из чисел или массивов
  * 
  * @example
  * // returns [1, 2, 3]
  * flatten([1, [2, [3]]]);
  * 
- * @returns {Array<Number>}
+ * @returns - Массив чиcел
  */
-function flatten(numbers) {
-    if (typeof numbers === 'number') return numbers;
-    ans = []
-    numbers.forEach(el => {
-        ans = ans.concat(flatten(el))
-    });
-    return ans
+const flatten = (numbers) => {
+    return numbers.reduce(
+        (acc, cur) => acc.concat(cur instanceof Array ? flatten(cur) : cur),
+        []
+    );
 }
