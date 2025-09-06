@@ -30,17 +30,15 @@
  * @example
  * // Обработка отсутствующих ключей и специальных значений
  * const data = [
- *   { id: 1, category: 'fruit' },
- *   { id: 2 }, // нет ключа category
- *   { id: 3, category: null }
+ *   { id: 1, category: 'fruit', name: 'apple' },
+ *   { id: 2 }, // нет ключа category → пропускается
+ *   { id: 3, category: null, name: 'grape' } // null → пропускается
  * ];
  * 
  * const result = groupBy(data, 'category');
  * // Результат:
  * // {
- * //   fruit: [{ id: 1, category: 'fruit' }],
- * //   undefined: [{ id: 2 }],
- * //   null: [{ id: 3, category: null }]
+ * //   fruit: [{ id: 1, category: 'fruit', name: 'apple' }]
  * // }
  */
 function groupBy(array, key) {
@@ -53,9 +51,11 @@ function groupBy(array, key) {
     for (const item of array) {
         const groupValue = item[key];
         
-        const groupKey = groupValue === undefined ? 'undefined' : 
-                        groupValue === null ? 'null' : 
-                        groupValue;
+        if (groupValue === undefined || groupValue === null) {
+            continue;
+        }
+        
+        const groupKey = groupValue;
         
         if (!result[groupKey]) {
             result[groupKey] = [];

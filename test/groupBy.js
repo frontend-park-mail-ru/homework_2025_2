@@ -89,10 +89,10 @@ QUnit.module('Тестируем функцию groupBy', () => {
     QUnit.test('Обрабатывает отсутствие ключа в объектах', (assert) => {
         const data = [
             { id: 1, category: 'fruit', name: 'apple' },
-            { id: 2, name: 'banana' }, 
+            { id: 2, name: 'banana' },
             { id: 3, category: 'fruit', name: 'orange' },
-            { id: 4, category: null, name: 'grape' }, 
-            { id: 5, category: undefined, name: 'mango' } 
+            { id: 4, category: null, name: 'grape' },
+            { id: 5, category: undefined, name: 'mango' }
         ];
         
         const result = groupBy(data, 'category');
@@ -101,13 +101,6 @@ QUnit.module('Тестируем функцию groupBy', () => {
             fruit: [
                 { id: 1, category: 'fruit', name: 'apple' },
                 { id: 3, category: 'fruit', name: 'orange' }
-            ],
-            null: [
-                { id: 4, category: null, name: 'grape' }
-            ],
-            undefined: [
-                { id: 2, name: 'banana' },
-                { id: 5, category: undefined, name: 'mango' }
             ]
         }, 'Корректно обрабатывает отсутствие ключа и null/undefined значения');
     });
