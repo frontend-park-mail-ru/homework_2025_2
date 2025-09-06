@@ -17,7 +17,7 @@
  * // => { user: { name: "Alice", age: 30 } }
  */
 function deepMerge(source, target) {
-    if (target === null || typeof target !== "object"){
+    if (!target || typeof target !== "object"){
         if (source === undefined || source === null) return {};
 
         return structuredClone(source) ?? {};
