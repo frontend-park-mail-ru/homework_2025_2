@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Проверка значения на не null, тип object и не массив
+ * Проверка, что значение является 'чистым' объектом
  * @param {any} val - объект для проверки
  * 
  * @example
@@ -10,7 +10,7 @@
  * 
  * @returns {boolean}
  */
-const isObject = (val) => val !== null && typeof(val) === 'object' && !Array.isArray(val);
+const isObject = (val) => Object.prototype.toString.call(val) === '[object Object]';
 
 /**
  * Глубокое объединение двух объектов
