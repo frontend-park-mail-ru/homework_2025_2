@@ -15,15 +15,13 @@
  * // result.uniqueEmails = ['test@mail.com', 'user@mail.com']
  * // result.mostFrequentEmail = 'test@mail.com'
  */
-function emailAnalyzer(rawString)
-{
-    if (typeof rawString!=="string" && !(rawString instanceof String))
-    {
-        return undefined
+function emailAnalyzer(rawString) {
+    if (typeof rawString !== "string" && !(rawString instanceof String)) {
+        return undefined;
     }
     const REGULAR_OF_EMAIL= /(?:[a-zA-Z0-9_%+-]+\.?)+[a-zA-Z0-9_%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/g;
     let emails = rawString.match(REGULAR_OF_EMAIL) ?? [];
-    let normalizedEmails = emails.map((email) => email.toLowerCase())
+    let normalizedEmails = emails.map((email) => email.toLowerCase());
 
     let uniqueEmailsMap = new Map();
     normalizedEmails.forEach((email)=> uniqueEmailsMap.set(email, (uniqueEmailsMap.get(email) ?? 0)+1));
@@ -40,6 +38,6 @@ function emailAnalyzer(rawString)
     return {
         emailCount: normalizedEmails.length,
         uniqueEmails: [...uniqueEmailsMap.keys()],
-        mostFrequentEmail: maxKey ?? ''
+        mostFrequentEmail: maxKey ?? '',
     }
 }
