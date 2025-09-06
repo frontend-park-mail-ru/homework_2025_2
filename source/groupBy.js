@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Функция должна возвращать объект, где ключи — это уникальные значения по указанному полю, а значения — массивы объектов, соответствующих этим ключам.
  * 
@@ -41,27 +43,14 @@
  * //   fruit: [{ id: 1, category: 'fruit', name: 'apple' }]
  * // }
  */
-function groupBy(array, key) {
-    if (!Array.isArray(array)) {
-        throw new TypeError('Первый аргумент должен быть массивом');
-    }
+const groupBy = (array, key) => {
+    if (!Array.isArray(array)) throw new TypeError('Первый аргумент должен быть массивом');
     
-    const result = {};
-    
-    for (const item of array) {
+    return array.reduce((acc, item) => {
         const groupValue = item[key];
+        if (groupValue == null) return acc;
         
-        if (groupValue === undefined || groupValue === null) {
-            continue;
-        }
-        
-        const groupKey = groupValue;
-        
-        if (!result[groupKey]) {
-            result[groupKey] = [];
-        }
-        result[groupKey].push(item);
-    }
-    
-    return result;
-}
+        (acc[groupValue] ||= []).push(item);
+        return acc;
+    }, {});
+};
